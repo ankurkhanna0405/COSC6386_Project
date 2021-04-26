@@ -4,6 +4,7 @@ from examples.absolute_value import abs_value
 from fuzzingbook.ControlFlow import PyCFG, CFGNode, to_graph, gen_cfg
 import inspect
 from graphviz import Source, Graph
+from examples.pass_fail import pass_fail
 
 
 MAX_TRIES=10 # maximum number of iterations
@@ -46,3 +47,26 @@ for i in range(len(all_paths)):
     print("Path No:", i)
     print("Constraint found is:", adv_fuzzer_abs.extract_constraints(all_paths[i].get_path_to_root()))
     print("Z3 solver solution for the above constraint is:", adv_fuzzer_abs.solve_path_constraint(all_paths[i].get_path_to_root()))
+
+
+
+print("**********************************-------------------------------**************************************************")
+
+
+print(" Fuzzer output for pass_fail value example")
+
+
+adv_fuzzer_pass = AdvancedSymbolicFuzzer(pass_fail,max_tries=10,
+   max_iter=10,
+   max_depth=10)
+
+all_paths = adv_fuzzer_pass.get_all_paths(adv_fuzzer_pass.fnenter)
+
+
+for i in range(len(all_paths)):
+    
+    print("Path No:", i)
+    print("Constraint found is:", adv_fuzzer_pass.extract_constraints(all_paths[i].get_path_to_root()))
+    print("Z3 solver solution for the above constraint is:", adv_fuzzer_pass.solve_path_constraint(all_paths[i].get_path_to_root()))
+
+print("**********************************-------------------------------**************************************************")

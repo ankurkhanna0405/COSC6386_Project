@@ -32,26 +32,6 @@ for i in range(len(all_paths)):
 print("**********************************-------------------------------**************************************************")
 
 
-print(" Fuzzer output for Absolute value example")
-
-
-adv_fuzzer_abs = AdvancedSymbolicFuzzer(abs_value,max_tries=10,
-   max_iter=10,
-   max_depth=10)
-
-all_paths = adv_fuzzer_abs.get_all_paths(adv_fuzzer_abs.fnenter)
-
-
-for i in range(len(all_paths)):
-    
-    print("Path No:", i)
-    print("Constraint found is:", adv_fuzzer_abs.extract_constraints(all_paths[i].get_path_to_root()))
-    print("Z3 solver solution for the above constraint is:", adv_fuzzer_abs.solve_path_constraint(all_paths[i].get_path_to_root()))
-
-
-
-print("**********************************-------------------------------**************************************************")
-
 
 print(" Fuzzer output for pass_fail value example")
 

@@ -1,13 +1,14 @@
 from fuzzingbook.SymbolicFuzzer import  AdvancedSymbolicFuzzer
 from examples.GCD import gcd
+from examples.absolute_value import abs_value
 from fuzzingbook.ControlFlow import PyCFG, CFGNode, to_graph, gen_cfg
 import inspect
 from graphviz import Source, Graph
 
 
-MAX_TRIES=10
-MAX_ITER=10
-MAX_DEPTH=10
+MAX_TRIES=10 # maximum number of iterations
+MAX_ITER=10  # maximum number of tries to get a output
+MAX_DEPTH=10   # maximum depth the tool (program) should go in to trace the execution
 
 #Fuzzer for GCD.py example , the example involves a loop and hence we need Advanced Syymbolic fuzzer
 print(" Fuzzer output for GCD example")
@@ -27,4 +28,21 @@ for i in range(len(all_paths)):
     print("Z3 solver solution for the above constraint is:", adv_fuzzer_gcd.solve_path_constraint(all_paths[i].get_path_to_root()))
 
 
-print("**********************************-------------------------------**************************************************8")
+print("**********************************-------------------------------**************************************************")
+
+
+print(" Fuzzer output for Absolute value example")
+
+
+adv_fuzzer_abs = AdvancedSymbolicFuzzer(abs_value,max_tries=10,
+   max_iter=10,
+   max_depth=10)
+
+all_paths = adv_fuzzer_abs.get_all_paths(adv_fuzzer_abs.fnenter)
+
+
+for i in range(len(all_paths)):
+    
+    print("Path No:", i)
+    print("Constraint found is:", adv_fuzzer_abs.extract_constraints(all_paths[i].get_path_to_root()))
+    print("Z3 solver solution for the above constraint is:", adv_fuzzer_abs.solve_path_constraint(all_paths[i].get_path_to_root()))
